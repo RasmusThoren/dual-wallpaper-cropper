@@ -1,14 +1,15 @@
 import os
 import sys
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, StringVar, OptionMenu
 from wallpapercropper.monitors import get_monitor_data, compute_physical_size_from_diag
 from wallpapercropper.cropper import CropPreviewApp
 
 
 def get_project_root():
+    """Return the correct project root for both source and PyInstaller builds."""
     if getattr(sys, 'frozen', False):
-        # Running inside PyInstaller build → use parent of "dist/dual-wallpaper-cropper"
+        # Running inside PyInstaller build → use parent of dist/
         return os.path.abspath(os.path.join(os.path.dirname(sys.executable), ".."))
     else:
         # Running from source → repo root
@@ -47,10 +48,11 @@ def run_gui():
         messagebox.showerror("Error", "❌ Two monitors are required.")
         return
 
-    # Step 3: Ask user for diagonal sizes
+    # Step 3: Ask user for diagonal sizes + orientation
     diag_root = tk.Tk()
-    diag_root.title("Enter Monitor Sizes")
+    diag_root.title("Enter Monitor Sizes & Orientation")
     entries = {}
+    orientations = {}
 
     def on_submit():
         nonlocal monitors
@@ -59,8 +61,17 @@ def run_gui():
             for m in monitors:
                 name, w_px, h_px = m
                 diag_inch = float(entries[name].get())
+                orientation = orientations[name].get()
+
+                # Compute physical size
                 w_mm, h_mm = compute_physical_size_from_diag(w_px, h_px, diag_inch)
-                monitors_with_size.append((name, w_px, h_px, w_mm, h_mm))
+
+                # If portrait, swap width/height
+                if orientation == "Portrait":
+                    w_px, h_px = h_px, w_px
+                    w_mm, h_mm = h_mm, w_mm
+
+                monitors_with_size.append((name, w_px, h_px, w_mm, h_mm, orientation))
         except ValueError:
             messagebox.showerror("Invalid Input", "Please enter valid numeric values.")
             return
@@ -78,10 +89,19 @@ def run_gui():
         name, w_px, h_px = m
         frame = tk.Frame(diag_root)
         frame.pack(pady=5)
+
+        # Diagonal entry
         tk.Label(frame, text=f"{name} ({w_px}x{h_px}) diagonal size (inches):").pack(side="left")
-        entry = tk.Entry(frame)
-        entry.pack(side="left")
+        entry = tk.Entry(frame, width=6)
+        entry.pack(side="left", padx=5)
         entries[name] = entry
+
+        # Orientation dropdown
+        tk.Label(frame, text="Orientation:").pack(side="left")
+        orientation_var = StringVar(value="Landscape")
+        orientations[name] = orientation_var
+        option_menu = OptionMenu(frame, orientation_var, "Landscape", "Portrait")
+        option_menu.pack(side="left", padx=5)
 
     tk.Button(diag_root, text="OK", command=on_submit).pack(pady=10)
     diag_root.mainloop()

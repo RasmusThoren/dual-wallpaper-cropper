@@ -11,12 +11,12 @@ class CropPreviewApp:
         self.base_name = base_name
         self.output_dir = output_dir
 
-        self.top_monitor = top_monitor
+        self.top_monitor = top_monitor  # (name, w_px, h_px, w_mm, h_mm, orientation)
         self.bottom_monitor = bottom_monitor
 
         # Extract monitor data
-        top_name, top_w_px, top_h_px, top_w_mm, top_h_mm = top_monitor
-        bottom_name, bottom_w_px, bottom_h_px, bottom_w_mm, bottom_h_mm = bottom_monitor
+        top_name, top_w_px, top_h_px, top_w_mm, top_h_mm, top_orientation = top_monitor
+        bottom_name, bottom_w_px, bottom_h_px, bottom_w_mm, bottom_h_mm, bottom_orientation = bottom_monitor
 
         # Scale to match physical size
         top_ppmm = top_w_px / top_w_mm
@@ -107,7 +107,7 @@ class CropPreviewApp:
                                  f"Image {img_w}x{img_h} is too small for the required crops.")
             return
 
-        # ✅ Correct monitor names
+        # ✅ Use monitor names for filenames
         top_name = self.top_monitor[0]
         bottom_name = self.bottom_monitor[0]
 
