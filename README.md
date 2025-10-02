@@ -34,7 +34,7 @@ pip install -r requirements.txt
 
 This tool requires **Tkinter** (for the GUI) and `xrandr` (for monitor detection).
 
-On Ubuntu, install them with:
+Install with:
 
 ```bash
 sudo apt install python3-tk x11-xserver-utils
