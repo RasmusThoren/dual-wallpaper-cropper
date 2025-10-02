@@ -107,6 +107,15 @@ class CropPreviewApp:
                                  f"Image {img_w}x{img_h} is too small for the required crops.")
             return
 
-        # Use monitor names for filenames
+        # ✅ Correct monitor names
         top_name = self.top_monitor[0]
-        bottom_name = self.bottom_m
+        bottom_name = self.bottom_monitor[0]
+
+        top_path = os.path.join(self.output_dir, f"{self.base_name}_{top_name}.jpg")
+        bottom_path = os.path.join(self.output_dir, f"{self.base_name}_{bottom_name}.jpg")
+
+        self.img.crop(tuple(top_coords)).save(top_path)
+        self.img.crop(tuple(bottom_coords)).save(bottom_path)
+
+        messagebox.showinfo("Success", f"✅ Crops saved as:\n{top_path}\n{bottom_path}")
+        self.root.quit()

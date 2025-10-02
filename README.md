@@ -121,14 +121,12 @@ Run it with:
 
 ## 📸 Screenshots
 
-_(Add screenshots of your app here)_
-
 - Main preview window:  
-  ![Preview Screenshot](assets/preview.png)
+  ![Result Screenshot](assets/results.png)
+
 
 - Cropped output example:  
-  ![Result Screenshot](assets/result.png)
-
+  ![Preview Screenshot](assets/preview.png)
 ---
 
 ## 📜 License

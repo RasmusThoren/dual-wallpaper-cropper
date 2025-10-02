@@ -7,12 +7,11 @@ from wallpapercropper.cropper import CropPreviewApp
 
 
 def get_project_root():
-    """Return the correct project root for both source and PyInstaller builds."""
     if getattr(sys, 'frozen', False):
-        # Running inside a PyInstaller bundle → use executable directory
-        return os.path.dirname(sys.executable)
+        # Running inside PyInstaller build → use parent of "dist/dual-wallpaper-cropper"
+        return os.path.abspath(os.path.join(os.path.dirname(sys.executable), ".."))
     else:
-        # Running from source → go one level up from wallpapercropper/
+        # Running from source → repo root
         return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 
