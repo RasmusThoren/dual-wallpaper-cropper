@@ -68,6 +68,7 @@ Steps:
 You can build a standalone binary with **PyInstaller**:
 
 ```bash
+chmod +x build.sh
 ./build.sh
 ```
 
