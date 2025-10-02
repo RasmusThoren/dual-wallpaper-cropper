@@ -1,13 +1,24 @@
 import os
+import sys
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from wallpapercropper.monitors import get_monitor_data, compute_physical_size_from_diag
 from wallpapercropper.cropper import CropPreviewApp
 
 
+def get_project_root():
+    """Return the correct project root for both source and PyInstaller builds."""
+    if getattr(sys, 'frozen', False):
+        # Running inside a PyInstaller bundle → use executable directory
+        return os.path.dirname(sys.executable)
+    else:
+        # Running from source → go one level up from wallpapercropper/
+        return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+
 def run_gui():
     # Define input/output folders relative to project root
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    project_root = get_project_root()
     input_dir = os.path.join(project_root, "input_images")
     output_dir = os.path.join(project_root, "output_images")
 

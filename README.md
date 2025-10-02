@@ -1,5 +1,13 @@
 # Dual Wallpaper Cropper 🎨🖼️
 
+## 📌 Purpose
+This tool is designed to be used together with standalone wallpaper managers such as **HydraPaper** (for GNOME) or similar applications on other Linux desktop environments.  
+These apps let you assign a **different wallpaper to each monitor**.  
+
+By combining **Dual Wallpaper Cropper** with such an app, you can simulate the **"Span across monitors" feature from Windows**, where one large image is split and perfectly aligned across multiple monitors.
+
+---
+
 **Dual Wallpaper Cropper** is a simple GUI tool for Linux (X11) that lets you crop a single image into perfectly aligned wallpapers for a dual-monitor layout.  
 It ensures both monitors line up correctly by taking into account their **physical sizes** as well as their **resolutions**.
 
