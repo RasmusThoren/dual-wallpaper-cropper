@@ -1,6 +1,6 @@
 # Dual Wallpaper Cropper 🎨🖼️
 
-**Dual Wallpaper Cropper** is a simple GUI tool for Linux that lets you crop a single image into perfectly aligned wallpapers for a dual-monitor layout.  
+**Dual Wallpaper Cropper** is a simple GUI tool for Linux (X11) that lets you crop a single image into perfectly aligned wallpapers for a dual-monitor layout.  
 It ensures both monitors line up correctly by taking into account their **physical sizes** as well as their **resolutions**.
 
 ---
@@ -13,8 +13,29 @@ It ensures both monitors line up correctly by taking into account their **physic
 - GUI preview of crop areas
 - Move crop areas with **arrow keys**
 - Separate crops for **top/left** and **bottom/right** monitor
-- Saves wallpapers as `top_monitor.jpg` and `bottom_monitor.jpg`
+- Saves wallpapers using original filename + monitor name  
+  e.g. `sunset_HDMI-1.jpg`, `sunset_DP-1.jpg`
 - Error handling with GUI dialogs
+
+---
+
+## 📂 File Organization
+
+- Place your input wallpapers in:  
+  ```
+  input_images/
+  ```
+
+- Cropped wallpapers will be saved in:  
+  ```
+  output_images/
+  ```
+
+Example: if you load `input_images/sunset.jpg` and have monitors named `HDMI-1` and `DP-1`, the results will be:  
+```
+output_images/sunset_HDMI-1.jpg
+output_images/sunset_DP-1.jpg
+```
 
 ---
 
@@ -34,11 +55,20 @@ pip install -r requirements.txt
 
 This tool requires **Tkinter** (for the GUI) and `xrandr` (for monitor detection).
 
-Install with:
+On Linux (X11), install them with:
 
-```bash
-sudo apt install python3-tk x11-xserver-utils
-```
+- **Debian/Ubuntu:**
+  ```bash
+  sudo apt install python3-tk x11-xserver-utils
+  ```
+- **Fedora:**
+  ```bash
+  sudo dnf install python3-tkinter xrandr
+  ```
+- **Arch Linux:**
+  ```bash
+  sudo pacman -S tk xorg-xrandr
+  ```
 
 ---
 
@@ -51,15 +81,14 @@ python -m wallpapercropper.app
 ```
 
 Steps:
-1. Select a wallpaper image  
-2. Enter the diagonal size (inches) for each monitor  
-3. Choose layout (**T-shape** or **Side-by-side**)  
-4. Adjust crop areas in the preview:  
+1. Place your wallpaper image in `input_images/`  
+2. Select it from the file dialog  
+3. Enter the diagonal size (inches) for each monitor  
+4. Choose layout (**T-shape** or **Side-by-side**)  
+5. Adjust crop areas in the preview:  
    - Use the buttons to select **Top/Left** or **Bottom/Right** monitor  
    - Use the **arrow keys** to move the crop box  
-5. Save wallpapers — they will be exported as:  
-   - `top_monitor.jpg`  
-   - `bottom_monitor.jpg`  
+6. Save wallpapers — they will appear in `output_images/`  
 
 ---
 
@@ -72,7 +101,7 @@ chmod +x build.sh
 ./build.sh
 ```
 
-The binary will be in `dist/dual-wallpaper-cropper` and can run on any Ubuntu GNOME machine without Python installed.
+The binary will be in `dist/dual-wallpaper-cropper` and can run on any Linux (X11) system without Python installed.
 
 Run it with:
 
