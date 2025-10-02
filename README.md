@@ -1,7 +1,7 @@
 # Dual Wallpaper Cropper 🎨🖼️
 
 ## 📌 Purpose
-This tool is designed to be used together with standalone wallpaper managers such as **HydraPaper** (for GNOME) or similar applications on other Linux desktop environments.  
+This tool is designed to be used together with standalone wallpaper managers such as [**HydraPaper**](https://hydrapaper.gabmus.org/) (for GNOME) or similar applications on other Linux desktop environments.  
 These apps let you assign a **different wallpaper to each monitor**.  
 
 By combining **Dual Wallpaper Cropper** with such an app, you can simulate the **"Span across monitors" feature from Windows**, where one large image is split and perfectly aligned across multiple monitors.
