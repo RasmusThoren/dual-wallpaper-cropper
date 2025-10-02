@@ -1,9 +1,18 @@
+# Byte-compiled / cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# PyInstaller
 *.spec
 build/
 dist/
+
+# Virtual environments
 venv/
 .env
+
+# Local images
+input_images/
+output_images/
