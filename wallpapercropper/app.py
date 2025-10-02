@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from .monitors import get_monitor_data, compute_physical_size_from_diag
-from .cropper import CropPreviewApp
+from wallpapercropper.monitors import get_monitor_data, compute_physical_size_from_diag
+from wallpapercropper.cropper import CropPreviewApp
 
 def run_gui():
     # Step 1: Choose image
