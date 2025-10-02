@@ -1,20 +1,35 @@
+import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from wallpapercropper.monitors import get_monitor_data, compute_physical_size_from_diag
 from wallpapercropper.cropper import CropPreviewApp
 
+
 def run_gui():
-    # Step 1: Choose image
+    # Define input/output folders relative to project root
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    input_dir = os.path.join(project_root, "input_images")
+    output_dir = os.path.join(project_root, "output_images")
+
+    # Ensure input/output directories exist
+    os.makedirs(input_dir, exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Step 1: Choose image (start in input_images/)
     root = tk.Tk()
     root.withdraw()
     image_path = filedialog.askopenfilename(
         parent=root,
         title="Select an image",
+        initialdir=input_dir,
         filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp *.tiff *.webp")]
     )
     root.destroy()
     if not image_path:
         return
+
+    # Extract base filename for saving later
+    base_name = os.path.splitext(os.path.basename(image_path))[0]
 
     # Step 2: Get monitors
     monitors = get_monitor_data()
@@ -22,7 +37,7 @@ def run_gui():
         messagebox.showerror("Error", "❌ Two monitors are required.")
         return
 
-    # Step 3: Ask for diagonal sizes
+    # Step 3: Ask user for diagonal sizes
     diag_root = tk.Tk()
     diag_root.title("Enter Monitor Sizes")
     entries = {}
@@ -46,7 +61,7 @@ def run_gui():
 
         preview_root = tk.Tk()
         preview_root.title("Crop Preview")
-        CropPreviewApp(preview_root, image_path, top_monitor, bottom_monitor)
+        CropPreviewApp(preview_root, image_path, top_monitor, bottom_monitor, base_name, output_dir)
         preview_root.mainloop()
 
     for m in monitors:
@@ -60,6 +75,7 @@ def run_gui():
 
     tk.Button(diag_root, text="OK", command=on_submit).pack(pady=10)
     diag_root.mainloop()
+
 
 if __name__ == "__main__":
     run_gui()
